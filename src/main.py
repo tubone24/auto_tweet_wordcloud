@@ -103,8 +103,8 @@ def remove_url(text):
 
 
 def overdraw_image():
-    im1 = Image.open("background/3504359.jpg")
-    im2 = Image.open(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_alpha.png"))
+    im1 = Image.open("background/3504359.jpg").convert("RGBA")
+    im2 = Image.open(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_alpha.png")).convert("RGBA")
     im1.paste(im2, (1000, 500))
     im1.save(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_overlay.png"), quality=95)
 

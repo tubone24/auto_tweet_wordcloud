@@ -67,6 +67,8 @@ def get_tweets():
     res = twitter.get(url, params=params)
 
     if res.status_code == 200:
+        limit = res.headers['x-rate-limit-remaining']
+        print("API remain: {}".format(limit))
         tweets = []
         res_body = res.json()
         for line in res_body:

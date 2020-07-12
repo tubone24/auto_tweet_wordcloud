@@ -25,7 +25,7 @@ def generate_exclude_list():
     return exclude_list
 
 
-def generate_word_cloud(words, alpha=False, mask=False):
+def generate_word_cloud(words, filename, alpha=False, mask=False):
     text = ' '.join(words)
     font_path = FONT_PATH
 
@@ -44,7 +44,7 @@ def generate_word_cloud(words, alpha=False, mask=False):
                               mask=mask
                               ).generate(text)
         wordcloud.to_file(os.path.join(
-            os.path.dirname(__file__), "word_cloud_tweet_alpha.png"))
+            os.path.dirname(__file__), filename))
     else:
         wordcloud = WordCloud(background_color="white",
                               colormap="viridis",
@@ -52,7 +52,7 @@ def generate_word_cloud(words, alpha=False, mask=False):
                               mask=mask
                               ).generate(text)
         wordcloud.to_file(os.path.join(
-            os.path.dirname(__file__), "word_cloud_tweet.png"))
+            os.path.dirname(__file__), filename))
 
 
 def get_tweets():
@@ -106,8 +106,10 @@ def main():
     tweets = get_tweets()
     exclude_list = generate_exclude_list()
     words = word_count(tweets, exclude_list)
-    generate_word_cloud(words)
-    generate_word_cloud(words, alpha=True)
+    generate_word_cloud(words, "word_cloud_tweet.png")
+    generate_word_cloud(words, "word_cloud_tweet_alpha.png", alpha=True)
+    generate_word_cloud(words, "word_cloud_tweet_face_profile.png", mask="mask_photos/head-profile-of-young-male.png")
+    generate_word_cloud(words, "word_cloud_tweet_face_profile_alpha.png", alpha=True, mask="mask_photos/head-profile-of-young-male.png")
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ import numpy as np
 import os
 import re
 import codecs
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
 from requests_oauthlib import OAuth1Session
 from wordcloud import WordCloud
@@ -102,6 +102,13 @@ def remove_url(text):
     return re.sub(r"(https?|ftp)(:\/\/[-_\.!~*\'()a-zA-Z0-9;\/?:\@&=\+$,%#]+)", "", text)
 
 
+def overdraw_image():
+    im1 = Image.open("mask_photos/head-profile-of-young-male.png")
+    im2 = Image.open(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_alpha.png"))
+    im1.paste(im2)
+    im1.save(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_overlay.png"), quality=95)
+
+
 def main():
     tweets = get_tweets()
     exclude_list = generate_exclude_list()
@@ -110,6 +117,7 @@ def main():
     generate_word_cloud(words, "word_cloud_tweet_alpha.png", alpha=True)
     generate_word_cloud(words, "word_cloud_tweet_face_profile.png", mask="mask_photos/head-profile-of-young-male.png")
     generate_word_cloud(words, "word_cloud_tweet_face_profile_alpha.png", alpha=True, mask="mask_photos/head-profile-of-young-male.png")
+    overdraw_image()
 
 
 if __name__ == '__main__':

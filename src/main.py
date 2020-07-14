@@ -119,6 +119,8 @@ def main():
     generate_word_cloud(words, "word_cloud_tweet_alpha.png", alpha=True)
     generate_word_cloud(words, "word_cloud_tweet_face_profile.png", mask="mask_photos/head-profile-of-young-male.png")
     generate_word_cloud(words, "word_cloud_tweet_face_profile_alpha.png", alpha=True, mask="mask_photos/head-profile-of-young-male.png")
+    generate_word_cloud(words, "word_cloud_tweet_twitter_bird.png", mask="mask_photos/twitter.png")
+    generate_word_cloud(words, "word_cloud_tweet_twitter_bird_alpha.png", alpha=True, mask="mask_photos/twitter.png")
     overdraw_image()
 
 

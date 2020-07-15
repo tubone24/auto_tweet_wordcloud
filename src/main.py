@@ -6,7 +6,6 @@ import re
 import codecs
 from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
-from requests_oauthlib import OAuth1Session
 from wordcloud import WordCloud
 import tweepy
 

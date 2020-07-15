@@ -8,6 +8,7 @@ from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
 from requests_oauthlib import OAuth1Session
 from wordcloud import WordCloud
+import tweepy
 
 API_KEY = os.environ['API_KEY']
 API_SECRET_KEY = os.environ['API_SECRET_KEY']
@@ -56,27 +57,22 @@ def generate_word_cloud(words, filename, alpha=False, mask=False):
 
 
 def get_tweets():
-    twitter = OAuth1Session(API_KEY, API_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    url = "https://api.twitter.com/1.1/statuses/user_timeline.json"
-    params = {
-        'count': 200,
-        'exclude_replies': True,
-        'include_rts': False,
-        'screen_name': SCREEN_NAME,
-    }
-    res = twitter.get(url, params=params)
+    auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    api = tweepy.API(auth)
+    all_tweets = []
+    new_tweets = api.user_timeline(screen_name=SCREEN_NAME, count=200, include_rts=False, exclude_replies=True)
+    all_tweets.extend(new_tweets)
+    oldest = all_tweets[-1].id - 1
+    while len(new_tweets) > 0:
+        print(f"getting tweets before {oldest}")
+        new_tweets = api.user_timeline(screen_name=SCREEN_NAME, count=200, max_id=oldest, include_rts=False, exclude_replies=True)
+        all_tweets.extend(new_tweets)
+        oldest = all_tweets[-1].id - 1
+        print(f"...{len(all_tweets)} tweets downloaded so far")
+    return [remove_emoji(x['text']) for x in all_tweets]
 
-    if res.status_code == 200:
-        limit = res.headers['x-rate-limit-remaining']
-        print("API remain: {}".format(limit))
-        tweets = []
-        res_body = res.json()
-        for line in res_body:
-            tweets.append(remove_emoji(line['text']))
-    else:
-        print("Failed Status Code: {}".format(res.status_code))
-        raise res.raise_for_status()
-    return tweets
+
 
 
 def remove_emoji(src_str):

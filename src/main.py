@@ -70,7 +70,7 @@ def get_tweets():
         all_tweets.extend(new_tweets)
         oldest = all_tweets[-1].id - 1
     print(all_tweets)
-    return [remove_emoji(x['text']) for x in all_tweets]
+    return [remove_emoji(x.text) for x in all_tweets]
 
 
 def remove_emoji(src_str):

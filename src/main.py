@@ -69,7 +69,6 @@ def get_tweets():
         new_tweets = api.user_timeline(screen_name=SCREEN_NAME, count=200, max_id=oldest, include_rts=False, exclude_replies=True)
         all_tweets.extend(new_tweets)
         oldest = all_tweets[-1].id - 1
-    print(all_tweets)
     return [remove_emoji(x.text) for x in all_tweets]
 
 

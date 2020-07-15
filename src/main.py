@@ -65,7 +65,7 @@ def get_tweets():
     all_tweets.extend(new_tweets)
     oldest = all_tweets[-1].id - 1
     while len(new_tweets) > 0:
-        print(f"getting tweets before {oldest}")
+        print("getting tweets before {}".format(oldest))
         new_tweets = api.user_timeline(screen_name=SCREEN_NAME, count=200, max_id=oldest, include_rts=False, exclude_replies=True)
         all_tweets.extend(new_tweets)
         oldest = all_tweets[-1].id - 1

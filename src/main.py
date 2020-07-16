@@ -76,7 +76,7 @@ def get_trends():
     auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     api = tweepy.API(auth)
-    return api.trends_available()
+    return api.trends_place(1118285)
 
 
 def remove_emoji(src_str):

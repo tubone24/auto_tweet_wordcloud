@@ -42,6 +42,10 @@ Man Face in Profile Alpha
 
 ![imng](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_face_profile_alpha.png)
 
-Man Face in Profile with Masked image
+Twitter Bird
 
-![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_face_profile_overlay.png)
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_twitter_bird.png)
+
+Twitter Bird Alpha
+
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_twitter_bird_alpha.png)

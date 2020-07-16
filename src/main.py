@@ -72,11 +72,11 @@ def get_tweets():
     return [remove_emoji(x.text) for x in all_tweets]
 
 
-def get_trends():
+def get_trends_tokyo():
     auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     api = tweepy.API(auth)
-    return api.trends_place(1118285)
+    return [remove_emoji(x["name"]) for x in api.trends_place(1118285)[0]["trends"]]
 
 
 def remove_emoji(src_str):
@@ -122,7 +122,7 @@ def main():
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird.png", mask="mask_photos/twitter.png")
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird_alpha.png", alpha=True, mask="mask_photos/twitter.png")
     overdraw_image()
-    print(get_trends())
+    print(get_trends_tokyo())
 
 
 if __name__ == '__main__':

@@ -123,6 +123,7 @@ def main():
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird_alpha.png", alpha=True, mask="mask_photos/twitter.png")
     overdraw_image()
     print(get_trends_tokyo())
+    generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
 
 
 if __name__ == '__main__':

@@ -71,6 +71,13 @@ def get_tweets():
     return [remove_emoji(x.text) for x in all_tweets]
 
 
+def get_trends():
+    auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    api = tweepy.API(auth)
+    return api.trends_available()
+
+
 def remove_emoji(src_str):
     return ''.join(c for c in src_str if c not in emoji.UNICODE_EMOJI)
 
@@ -114,6 +121,7 @@ def main():
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird.png", mask="mask_photos/twitter.png")
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird_alpha.png", alpha=True, mask="mask_photos/twitter.png")
     overdraw_image()
+    print(get_trends())
 
 
 if __name__ == '__main__':

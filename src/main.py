@@ -110,7 +110,7 @@ def get_text_by_base_url(base_url, exclude_list):
     for slug in get_links_by_url(base_url, exclude_list):
         sleep(0.5)
         text_list.append(remove_emoji(remove_url(get_text_by_url(base_url + slug))).strip())
-    return " ".join(text_list)
+    return text_list
 
 
 def remove_emoji(src_str):
@@ -158,6 +158,8 @@ def main():
     overdraw_image()
     print(get_trends_tokyo())
     generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
+    blog_words = word_count(get_text_by_base_url("https://blog.tubone-project24.xyz", ["tag", "contact", "about"]), exclude_list)
+    generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True)
 
 
 if __name__ == '__main__':

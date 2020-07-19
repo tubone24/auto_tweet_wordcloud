@@ -36,6 +36,8 @@ def generate_word_cloud(words, filename, alpha=False, mask=False):
 
     if mask:
         mask = np.array(Image.open(mask))
+    elif mask == "rect":
+        mask = None
     else:
         x, y = np.ogrid[:450, :900]
         mask = ((x - 225) ** 2 / 5 ** 2) + ((y - 450) ** 2 / 10 ** 2) > 40 ** 2
@@ -179,7 +181,7 @@ def main():
     print(get_trends_tokyo())
     generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
     blog_words = word_count(get_text_by_base_url(BASE_URL, ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)
-    generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True)
+    generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True, mask="rect")
 
 
 if __name__ == '__main__':

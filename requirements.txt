@@ -6,3 +6,4 @@ numpy==1.19.0
 Janome==0.3.10
 emoji==0.5.4
 tweepy==3.9.0
+beautifulsoup4==4.9.1

@@ -8,6 +8,9 @@ from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
 from wordcloud import WordCloud
 import tweepy
+from bs4 import BeautifulSoup
+import requests
+from time import sleep
 
 API_KEY = os.environ['API_KEY']
 API_SECRET_KEY = os.environ['API_SECRET_KEY']
@@ -26,7 +29,7 @@ def generate_exclude_list():
 
 
 def generate_word_cloud(words, filename, alpha=False, mask=False):
-    text = ' '.join(words)
+    text = " ".join(words)
     font_path = FONT_PATH
 
     if mask:
@@ -79,8 +82,39 @@ def get_trends_tokyo():
     return [remove_emoji(x["name"]) for x in api.trends_place(1118285)[0]["trends"]]
 
 
+def get_links_by_url(url, exclude_list):
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, "html.parser")
+    title = soup.find("title").get_text()
+    print("page title: {}".format(title))
+    links = [url.get("href") for url in soup.find_all("a") if 'http' not in url.get("href")]
+    for exclude in exclude_list:
+        links = [link for link in links if exclude not in link]
+    print(links)
+    print("get {} links".format(len(links)))
+    return links
+
+
+def get_text_by_url(url):
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, "html.parser")
+    content = soup.find("div", class_='content')
+    if content:
+        return content.get_text()
+    else:
+        return ""
+
+
+def get_text_by_base_url(base_url, exclude_list):
+    text_list = []
+    for slug in get_links_by_url(base_url, exclude_list):
+        sleep(0.5)
+        text_list.append(remove_emoji(remove_url(get_text_by_url(base_url + slug))).strip())
+    return " ".join(text_list)
+
+
 def remove_emoji(src_str):
-    return ''.join(c for c in src_str if c not in emoji.UNICODE_EMOJI)
+    return "".join(c for c in src_str if c not in emoji.UNICODE_EMOJI)
 
 
 def word_count(texts, exclude_list):

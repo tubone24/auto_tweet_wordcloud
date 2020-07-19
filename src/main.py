@@ -10,6 +10,7 @@ from wordcloud import WordCloud
 import tweepy
 from bs4 import BeautifulSoup
 import requests
+from reppy.cache import RobotsCache
 from time import sleep
 
 API_KEY = os.environ['API_KEY']
@@ -18,6 +19,7 @@ ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
 FONT_PATH = "fonts/keifont.ttf"
 SCREEN_NAME = "@meitante1conan"
+BASE_URL = "https://blog.tubone-project24.xyz"
 
 
 def generate_exclude_list():
@@ -121,6 +123,9 @@ def get_text_by_url(url):
 
 
 def get_text_by_base_url(base_url, exclude_list):
+    robots = RobotsCache(capacity=100)
+    if not robots.allowed(BASE_URL, "python-requests"):
+        return ["Crawling this site is not allowed by robots.txt"]
     text_list = []
     for slug in get_links_by_url_depth(base_url, exclude_list):
         sleep(0.5)
@@ -173,7 +178,7 @@ def main():
     overdraw_image()
     print(get_trends_tokyo())
     generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
-    blog_words = word_count(get_text_by_base_url("https://blog.tubone-project24.xyz", ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)
+    blog_words = word_count(get_text_by_base_url(BASE_URL, ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)
     generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True)
 
 

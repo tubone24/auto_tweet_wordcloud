@@ -90,9 +90,24 @@ def get_links_by_url(url, exclude_list):
     links = [url.get("href") for url in soup.find_all("a") if 'http' not in url.get("href")]
     for exclude in exclude_list:
         links = [link for link in links if exclude not in link]
-    print(links)
     print("get {} links".format(len(links)))
     return links
+
+
+def get_links_by_url_depth(url, exclude_list, depth=5):
+    all_links = set()
+    done_crawl = set()
+    for i in range(depth):
+        print("loop depth: {}".format(i))
+        links = set(get_links_by_url(url, exclude_list))
+        all_links |= links
+        diff_links = links - done_crawl
+        for link in diff_links:
+            all_links |= set(get_links_by_url(url + link, exclude_list))
+            sleep(0.5)
+        done_crawl |= diff_links
+        print(all_links)
+    return all_links
 
 
 def get_text_by_url(url):
@@ -107,7 +122,7 @@ def get_text_by_url(url):
 
 def get_text_by_base_url(base_url, exclude_list):
     text_list = []
-    for slug in get_links_by_url(base_url, exclude_list):
+    for slug in get_links_by_url_depth(base_url, exclude_list):
         sleep(0.5)
         text_list.append(remove_emoji(remove_url(get_text_by_url(base_url + slug))).strip())
     return text_list
@@ -158,7 +173,7 @@ def main():
     overdraw_image()
     print(get_trends_tokyo())
     generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
-    blog_words = word_count(get_text_by_base_url("https://blog.tubone-project24.xyz", ["tag", "contact", "about"]), exclude_list)
+    blog_words = word_count(get_text_by_base_url("https://blog.tubone-project24.xyz", ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)
     generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True)
 
 

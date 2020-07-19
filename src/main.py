@@ -34,10 +34,10 @@ def generate_word_cloud(words, filename, alpha=False, mask=False):
     text = " ".join(words)
     font_path = FONT_PATH
 
-    if mask:
-        mask = np.array(Image.open(mask))
-    elif mask == "rect":
+    if mask == "rect":
         mask = None
+    elif mask:
+        mask = np.array(Image.open(mask))
     else:
         x, y = np.ogrid[:450, :900]
         mask = ((x - 225) ** 2 / 5 ** 2) + ((y - 450) ** 2 / 10 ** 2) > 40 ** 2

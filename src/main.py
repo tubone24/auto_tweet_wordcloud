@@ -7,6 +7,7 @@ import codecs
 from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
 from wordcloud import WordCloud
+import markovify
 import tweepy
 from bs4 import BeautifulSoup
 import requests

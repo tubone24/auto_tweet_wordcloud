@@ -156,6 +156,31 @@ def word_count(texts, exclude_list):
     return words
 
 
+def wakati_text(texts):
+    t = Tokenizer()
+    words = []
+    for text in texts:
+        remove_url_text = remove_url(text)
+        tokens = t.tokenize(remove_url_text)
+        for token in tokens:
+            words.append(token.base_form)
+        words.append("\n")
+    wakati_text = " ".join(words)
+    return wakati_text
+
+def textMakarov(text):
+    sentence = None
+    while sentence is None:
+        text_model = markovify.NewlineText(text, state_size=3)
+
+        sentence = text_model.make_sentence()
+
+    with open('learned_data.json', 'w') as f:
+        f.write(text_model.to_json())
+
+    return ''.join(sentence.split())
+
+
 def remove_url(text):
     return re.sub(r"(https?|ftp)(:\/\/[-_\.!~*\'()a-zA-Z0-9;\/?:\@&=\+$,%#]+)", "", text)
 
@@ -178,6 +203,8 @@ def main():
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird.png", mask="mask_photos/twitter.png")
     generate_word_cloud(words, "word_cloud_tweet_twitter_bird_alpha.png", alpha=True, mask="mask_photos/twitter.png")
     overdraw_image()
+    print("makarov: ")
+    print(textMakarov(wakati_text(tweets)))
     print(get_trends_tokyo())
     generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
     blog_words = word_count(get_text_by_base_url(BASE_URL, ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)

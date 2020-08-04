@@ -55,13 +55,20 @@ jobs:
           git push origin master
           # git tag -m "GitHub Action auto commit tag" 1.0.0-`date "+%Y%m%d_%H%M%S"`
           # git push origin --tags
+      - name: release version
+        id: release_version
+        run: |
+          VERSION=$(date "+%Y%m%d_%H%M%S")
+          echo ::set-output name=version::${ VERSION }
+          echo ${ VERSION }        
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          tag_name: ${{ `date "+%Y%m%d_%H%M%S"` }}
-          release_name: Release ${{ `date "+%Y%m%d_%H%M%S"` }}
+          tag_name: ${{ steps.release_version.outputs.version }}
+          release_name: Release ${{ steps.release_version.outputs.version }}
           draft: false
           prerelease: false
       - name: Upload Release Asset MakarovText

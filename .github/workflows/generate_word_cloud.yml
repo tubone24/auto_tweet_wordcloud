@@ -60,8 +60,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          tag_name: ${{ date "+%Y%m%d_%H%M%S" }}
-          release_name: Release ${{ date "+%Y%m%d_%H%M%S" }}
+          tag_name: ${{ `date "+%Y%m%d_%H%M%S"` }}
+          release_name: Release ${{ `date "+%Y%m%d_%H%M%S"` }}
           draft: false
           prerelease: false
       - name: Upload Release Asset MakarovText

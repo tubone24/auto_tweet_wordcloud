@@ -59,6 +59,10 @@ jobs:
         id: release_version
         run: |
           echo ::set-output name=version::$(date "+%Y%m%d_%H%M%S")   
+      - name: makarov text
+        id: makarov_text
+        run: |
+          echo ::set-output name=text::$(cat makarov_text.txt)   
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -67,6 +71,8 @@ jobs:
         with:
           tag_name: ${{ steps.release_version.outputs.version }}
           release_name: Release ${{ steps.release_version.outputs.version }}
+          body: |
+            マカロフひとこと: ${{ steps.makarov_text.outputs.text }}
           draft: false
           prerelease: false
       - name: Upload Release Asset MakarovText

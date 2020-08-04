@@ -58,9 +58,7 @@ jobs:
       - name: release version
         id: release_version
         run: |
-          VERSION=$(date "+%Y%m%d_%H%M%S")
-          echo ::set-output name=version::${{ VERSION }}
-          echo ${{ VERSION }}   
+          echo ::set-output name=version::$(date "+%Y%m%d_%H%M%S")   
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

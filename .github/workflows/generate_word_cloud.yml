@@ -42,7 +42,7 @@ jobs:
         run: |
           git config --local user.name GitHubActions
           git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-      - name: Git pull
+      - name: Git push, tag, upload assets
         run: |
           git checkout master
           git pull origin master
@@ -53,5 +53,32 @@ jobs:
           fi
           git commit -am 'GitHub Actions commit' --allow-empty
           git push origin master
-          git tag -m "GitHub Action auto commit tag" 1.0.0-`date "+%Y%m%d_%H%M%S"`
-          git push origin --tags
+          # git tag -m "GitHub Action auto commit tag" 1.0.0-`date "+%Y%m%d_%H%M%S"`
+          # git push origin --tags
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset MakarovText
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./makarov_text.txt
+          asset_name: makarov_text.txt
+          asset_content_type: text/plain
+      - name: Upload Release Asset Makarov Learned Data
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./makarov_learned_data.json
+          asset_name: makarov_learned_data.json
+          asset_content_type: application/json

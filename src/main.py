@@ -176,9 +176,11 @@ def textMakarov(text):
 
         sentence = text_model.make_sentence()
 
-    with open('learned_data.json', 'w') as f:
+    with open("makarov_learned_data.json", "w") as f:
         f.write(text_model.to_json())
 
+    with open("makarov_text.txt", "w") as f:
+        f.write(''.join(sentence.split()))
     return ''.join(sentence.split())
 
 

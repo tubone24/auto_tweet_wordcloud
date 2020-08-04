@@ -120,3 +120,13 @@ jobs:
           asset_path: ./src/word_cloud_blog.png
           asset_name: word_cloud_blog.png
           asset_content_type: image/png
+      - name: Slack Notification with makarov
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: github_actions
+          SLACK_COLOR: '#3278BD'
+          SLACK_ICON: https://1.bp.blogspot.com/-DU9jll2ZQ38/XexqGlVzO9I/AAAAAAABWdQ/m0lQONbEfSgEjIN14h7iIfRh8WS5qwrFACNcBGAsYHQ/s1600/gal_o_man.png
+          SLACK_MESSAGE: ${{ steps.makarov_text.outputs.text }}
+          SLACK_TITLE: Deploy wordcloud
+          SLACK_USERNAME: wordcloud
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

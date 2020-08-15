@@ -1,6 +1,6 @@
 import os
 import tweepy
-from .utils import remove_emoji
+from utils import remove_emoji
 
 API_KEY = os.environ['API_KEY']
 API_SECRET_KEY = os.environ['API_SECRET_KEY']

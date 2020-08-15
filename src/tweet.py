@@ -38,7 +38,7 @@ class Tweet:
         return [remove_emoji(x["name"]) for x in self.api.trends_place(1118285)[0]["trends"]]
 
     def get_followers(self, user):
-        return [follower.screen_name for follower in self.__limit_handled(tweepy.Cursor(self.api.followers(user)).items())]
+        return [follower.screen_name for follower in self.__limit_handled(tweepy.Cursor(self.api.followers, user).items())]
 
     def get_followers_followers_list(self):
         followers_followers_list = []

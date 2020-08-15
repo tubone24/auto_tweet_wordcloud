@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
@@ -8,7 +7,7 @@ from utils import remove_url
 FONT_PATH = "fonts/keifont.ttf"
 
 
-class WordCloud:
+class WC:
     def __init__(self, texts, exclude_list):
         self.texts = texts
         self.exclude_list = exclude_list
@@ -25,14 +24,13 @@ class WordCloud:
                 if part_of_speech in ["名詞"]:
                     if (part_of_speech2 != "非自立") and (part_of_speech2 != "代名詞") and (part_of_speech2 != "数"):
                         if token.base_form not in self.exclude_list:
-                            # print("{}: {} {}".format(token.base_form, part_of_speech, part_of_speech2))
+                            print("{}: {} {}".format(token.base_form, part_of_speech, part_of_speech2))
                             words.append(token.base_form)
         return words
 
     def generate_word_cloud(self, filename, alpha=False, mask=False):
         words = self.__word_count()
         text = " ".join(words)
-
         if mask == "rect":
             mask = None
         elif mask:
@@ -61,6 +59,6 @@ class WordCloud:
     @staticmethod
     def overdraw_image():
         im1 = Image.open("mask_photos/head-profile-of-young-male.png")
-        im2 = Image.open(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_alpha.png")).convert("RGBA")
+        im2 = Image.open("word_cloud_tweet_face_profile_alpha.png").convert("RGBA")
         im1.paste(im2, (1000, 500), im2)
-        im1.save(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_overlay.png"), quality=95)
+        im1.save("word_cloud_tweet_face_profile_overlay.png", quality=95)

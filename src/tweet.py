@@ -40,7 +40,7 @@ class Tweet:
     def get_followers(self, user):
         followers = []
         try:
-            for follower in self.__limit_handled(tweepy.Cursor(self.api.followers, user).items())
+            for follower in self.__limit_handled(tweepy.Cursor(self.api.followers, user).items()):
                 followers.append(follower.screen_name)
         except RuntimeError as e:  # RuntimeError: generator raised StopIteration
             print(e)

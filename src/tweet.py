@@ -18,12 +18,14 @@ class Tweet:
 
     @staticmethod
     def __limit_handled(cursor):
+        wait_seconds = 1
         while True:
             try:
                 yield cursor.next()
             except tweepy.RateLimitError as e:
                 print(e)
-                sleep(15 * 60)
+                sleep(wait_seconds)
+                wait_seconds *= 2 # Retries with Exponential Backoff
 
     def get_tweets(self):
         all_tweets = []
@@ -52,7 +54,7 @@ class Tweet:
         my_followers = self.get_friends(SCREEN_NAME)
         followers_followers_list.append([follower.screen_name for follower in my_followers])
         for follower in my_followers:
-            print(follower)
+            print(follower.screen_name)
             if follower.friends_count > 300:
                 print("many friends may be a spam: {}".format(follower.friends_count))
                 continue

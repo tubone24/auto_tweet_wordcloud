@@ -13,8 +13,8 @@ from bs4 import BeautifulSoup
 import requests
 from reppy.cache import RobotsCache
 from time import sleep
-from .utils import generate_exclude_list, remove_emoji, remove_url
-from .tweet import Tweet
+from utils import generate_exclude_list, remove_emoji, remove_url
+from tweet import Tweet
 
 API_KEY = os.environ['API_KEY']
 API_SECRET_KEY = os.environ['API_SECRET_KEY']

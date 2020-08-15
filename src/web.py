@@ -43,7 +43,7 @@ class Web:
                 all_links |= set(self.__get_links_by_url(self.base_url + link))
                 sleep(0.5)
             done_crawl |= diff_links
-            print(all_links)
+            # print(all_links)
         return all_links
 
     @staticmethod

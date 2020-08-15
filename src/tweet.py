@@ -21,7 +21,8 @@ class Tweet:
         while True:
             try:
                 yield cursor.next()
-            except tweepy.RateLimitError:
+            except tweepy.RateLimitError as e:
+                print(e)
                 sleep(15 * 60)
 
     def get_tweets(self):

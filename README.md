@@ -28,24 +28,24 @@ python src/main.py
 
 Default
 
-![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet.png)
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/word_cloud_tweet.png)
 
 Default Alpha
 
-![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_alpha.png)
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/word_cloud_tweet_alpha.png)
 
 Man Face in Profile
 
-![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_face_profile.png)
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/word_cloud_tweet_face_profile.png)
 
 Man Face in Profile Alpha
 
-![imng](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_face_profile_alpha.png)
+![imng](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/word_cloud_tweet_face_profile_alpha.png)
 
 Twitter Bird
 
-![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_twitter_bird.png)
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/word_cloud_tweet_twitter_bird.png)
 
 Twitter Bird Alpha
 
-![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/src/word_cloud_tweet_twitter_bird_alpha.png)
+![img](https://raw.githubusercontent.com/tubone24/auto_tweet_wordcloud/master/word_cloud_tweet_twitter_bird_alpha.png)

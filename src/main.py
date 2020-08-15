@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 import os
-from time import sleep
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
 from wordcloud import WordCloud
 import markovify
-from bs4 import BeautifulSoup
-import requests
-from reppy.cache import RobotsCache
 from utils import generate_exclude_list, remove_emoji, remove_url
 from tweet import Tweet
+from web import Web
 
 FONT_PATH = "fonts/keifont.ttf"
 BASE_URL = "https://blog.tubone-project24.xyz"
+WEB_EXCLUDE_LIST = ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]
 
 
 def generate_word_cloud(words, filename, alpha=False, mask=False):
@@ -48,55 +46,6 @@ def generate_word_cloud(words, filename, alpha=False, mask=False):
             os.path.dirname(__file__), filename))
 
 
-def get_links_by_url(url, exclude_list):
-    res = requests.get(url)
-    soup = BeautifulSoup(res.text, "html.parser")
-    title = soup.find("title").get_text()
-    print("page title: {}".format(title))
-    links = [url.get("href") for url in soup.find_all("a") if 'http' not in url.get("href")]
-    for exclude in exclude_list:
-        links = [link for link in links if exclude not in link]
-    print("get {} links".format(len(links)))
-    return links
-
-
-def get_links_by_url_depth(url, exclude_list, depth=5):
-    all_links = set()
-    done_crawl = set()
-    for i in range(depth):
-        print("loop depth: {}".format(i))
-        links = set(get_links_by_url(url, exclude_list))
-        all_links |= links
-        diff_links = links - done_crawl
-        for link in diff_links:
-            all_links |= set(get_links_by_url(url + link, exclude_list))
-            sleep(0.5)
-        done_crawl |= diff_links
-        print(all_links)
-    return all_links
-
-
-def get_text_by_url(url):
-    res = requests.get(url)
-    soup = BeautifulSoup(res.text, "html.parser")
-    content = soup.find("div", class_='content')
-    if content:
-        return content.get_text()
-    else:
-        return ""
-
-
-def get_text_by_base_url(base_url, exclude_list):
-    robots = RobotsCache(capacity=100)
-    if not robots.allowed(BASE_URL, "python-requests"):
-        return ["Crawling this site is not allowed by robots.txt"]
-    text_list = []
-    for slug in get_links_by_url_depth(base_url, exclude_list):
-        sleep(0.5)
-        text_list.append(remove_emoji(remove_url(get_text_by_url(base_url + slug))).strip())
-    return text_list
-
-
 def word_count(texts, exclude_list):
     t = Tokenizer()
     words = []
@@ -125,6 +74,7 @@ def wakati_text(texts):
         words.append("\n")
     wakati_text = " ".join(words)
     return wakati_text
+
 
 def textMakarov(text):
     sentence = None
@@ -163,7 +113,8 @@ def main():
     print("makarov: ")
     print(textMakarov(wakati_text(tweets)))
     generate_word_cloud(tw.get_trends_tokyo(), "trend_tokyo.png")
-    blog_words = word_count(get_text_by_base_url(BASE_URL, ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)
+    web = Web(BASE_URL, WEB_EXCLUDE_LIST)
+    blog_words = word_count(web.get_text_by_base_url(), exclude_list)
     generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True, mask="rect")
 
 

@@ -16,7 +16,8 @@ class Tweet:
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         self.api = tweepy.API(auth)
 
-    def __limit_handled(self, cursor):
+    @staticmethod
+    def __limit_handled(cursor):
         while True:
             try:
                 yield cursor.next()
@@ -25,19 +26,10 @@ class Tweet:
 
     def get_tweets(self):
         all_tweets = []
-        # new_tweets = self.api.user_timeline(screen_name=SCREEN_NAME, count=200, include_rts=False, exclude_replies=True)
-        # all_tweets.extend(new_tweets)
-        # oldest = all_tweets[-1].id - 1
-        # while len(new_tweets) > 0:
-        #     print("getting tweets before {}".format(oldest))
-        #     new_tweets = self.api.user_timeline(screen_name=SCREEN_NAME, count=200, max_id=oldest, include_rts=False, exclude_replies=True)
-        #     all_tweets.extend(new_tweets)
-        #     oldest = all_tweets[-1].id - 1
-        # print("Tweet Num {}".format(len(all_tweets)))
         try:
             for new_tweet in self.__limit_handled(tweepy.Cursor(self.api.user_timeline, screen_name=SCREEN_NAME, include_rts=False, exclude_replies=True).items()):
                 all_tweets.append(new_tweet)
-        except RuntimeError as e:
+        except RuntimeError as e:  # RuntimeError: generator raised StopIteration
             print(e)
         print("Tweet Num {}".format(len(all_tweets)))
         return [remove_emoji(x.text) for x in all_tweets]

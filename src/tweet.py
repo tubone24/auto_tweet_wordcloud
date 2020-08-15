@@ -24,8 +24,9 @@ class Tweet:
                 yield cursor.next()
             except tweepy.RateLimitError as e:
                 print(e)
+                print("wait {} seconds".format(wait_seconds))
                 sleep(wait_seconds)
-                wait_seconds *= 2 # Retries with Exponential Backoff
+                wait_seconds *= 2  # Retries with Exponential Backoff
 
     def get_tweets(self):
         all_tweets = []

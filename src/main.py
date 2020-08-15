@@ -29,7 +29,7 @@ def main():
     web = Web(BASE_URL, WEB_EXCLUDE_LIST)
     wordcloud_blog_words = WC(web.get_text_by_base_url(), exclude_list)
     wordcloud_blog_words.generate_word_cloud("word_cloud_blog.png", alpha=True, mask="rect")
-    print(tw.get_followers_followers_list())
+    # print(tw.get_followers_followers_list())
 
 
 if __name__ == '__main__':

@@ -24,7 +24,7 @@ class WC:
                 if part_of_speech in ["名詞"]:
                     if (part_of_speech2 != "非自立") and (part_of_speech2 != "代名詞") and (part_of_speech2 != "数"):
                         if token.base_form not in self.exclude_list:
-                            print("{}: {} {}".format(token.base_form, part_of_speech, part_of_speech2))
+                            # print("{}: {} {}".format(token.base_form, part_of_speech, part_of_speech2))
                             words.append(token.base_form)
         return words
 

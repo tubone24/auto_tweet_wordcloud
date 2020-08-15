@@ -51,10 +51,10 @@ class Tweet:
         followers_followers_list = []
         my_followers = self.get_friends(SCREEN_NAME)
         followers_followers_list.append(my_followers)
-        for follower in my_followers:
-            print(follower)
-            if "kuina_ch" in follower:
-                continue
-            others_followers = self.get_friends(follower)
-            followers_followers_list.append(others_followers)
+        # for follower in my_followers:
+        #     print(follower)
+        #     if "kuina_ch" in follower:
+        #         continue
+        #     others_followers = self.get_friends(follower)
+        #     followers_followers_list.append(others_followers)
         return followers_followers_list

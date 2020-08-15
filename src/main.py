@@ -1,27 +1,18 @@
 # -*- coding: utf-8 -*-
-import emoji
-import numpy as np
 import os
-import re
-import codecs
+from time import sleep
+import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 from janome.tokenizer import Tokenizer
 from wordcloud import WordCloud
 import markovify
-import tweepy
 from bs4 import BeautifulSoup
 import requests
 from reppy.cache import RobotsCache
-from time import sleep
 from utils import generate_exclude_list, remove_emoji, remove_url
 from tweet import Tweet
 
-API_KEY = os.environ['API_KEY']
-API_SECRET_KEY = os.environ['API_SECRET_KEY']
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
-ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
 FONT_PATH = "fonts/keifont.ttf"
-SCREEN_NAME = "@meitante1conan"
 BASE_URL = "https://blog.tubone-project24.xyz"
 
 

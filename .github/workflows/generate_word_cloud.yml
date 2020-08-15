@@ -58,11 +58,11 @@ jobs:
       - name: release version
         id: release_version
         run: |
-          echo ::set-output name=version::$(date "+%Y%m%d_%H%M%S")   
+          echo ::set-output name=version::$(date "+%Y%m%d_%H%M%S")
       - name: makarov text
         id: makarov_text
         run: |
-          echo ::set-output name=text::$(cat makarov_text.txt)   
+          echo ::set-output name=text::$(cat makarov_text.txt)
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -80,7 +80,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./makarov_text.txt
           asset_name: makarov_text.txt
           asset_content_type: text/plain
@@ -89,7 +89,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./makarov_learned_data.json
           asset_name: makarov_learned_data.json
           asset_content_type: application/json
@@ -98,8 +98,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/trend_tokyo.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: trend_tokyo.png
           asset_name: trend_tokyo.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov twitter wordcloud
@@ -107,8 +107,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_tweet.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_tweet.png
           asset_name: word_cloud_tweet.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov blog wordcloud
@@ -116,8 +116,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_blog.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_blog.png
           asset_name: word_cloud_blog.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov word_cloud_tweet_alpha
@@ -125,8 +125,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_tweet_alpha.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_tweet_alpha.png
           asset_name: word_cloud_tweet_alpha.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov word_cloud_tweet_face_profile_alpha
@@ -134,8 +134,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_tweet_face_profile_alpha.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_tweet_face_profile_alpha.png
           asset_name: word_cloud_tweet_face_profile_alpha.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov word_cloud_tweet_face_profile
@@ -143,8 +143,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_tweet_face_profile.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_tweet_face_profile.png
           asset_name: word_cloud_tweet_face_profile.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov word_cloud_tweet_twitter_bird_alpha
@@ -152,8 +152,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_tweet_twitter_bird_alpha.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_tweet_twitter_bird_alpha.png
           asset_name: word_cloud_tweet_twitter_bird_alpha.png
           asset_content_type: image/png
       - name: Upload Release Asset Makarov word_cloud_tweet_twitter_bird
@@ -161,8 +161,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./src/word_cloud_tweet_twitter_bird.png
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: word_cloud_tweet_twitter_bird.png
           asset_name: word_cloud_tweet_twitter_bird.png
           asset_content_type: image/png
       - name: Slack Notification with makarov

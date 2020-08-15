@@ -13,6 +13,8 @@ from bs4 import BeautifulSoup
 import requests
 from reppy.cache import RobotsCache
 from time import sleep
+from .utils import generate_exclude_list, remove_emoji, remove_url
+from .tweet import Tweet
 
 API_KEY = os.environ['API_KEY']
 API_SECRET_KEY = os.environ['API_SECRET_KEY']
@@ -21,14 +23,6 @@ ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
 FONT_PATH = "fonts/keifont.ttf"
 SCREEN_NAME = "@meitante1conan"
 BASE_URL = "https://blog.tubone-project24.xyz"
-
-
-def generate_exclude_list():
-    exclude_list = []
-    with codecs.open(os.path.join(os.path.dirname(__file__), "stop_words.txt"), "r", "UTF-8") as lines:
-        for line in lines:
-            exclude_list.append(line.replace("\n", "").replace("\r", ""))
-    return exclude_list
 
 
 def generate_word_cloud(words, filename, alpha=False, mask=False):
@@ -61,30 +55,6 @@ def generate_word_cloud(words, filename, alpha=False, mask=False):
                               ).generate(text)
         wordcloud.to_file(os.path.join(
             os.path.dirname(__file__), filename))
-
-
-def get_tweets():
-    auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    api = tweepy.API(auth)
-    all_tweets = []
-    new_tweets = api.user_timeline(screen_name=SCREEN_NAME, count=200, include_rts=False, exclude_replies=True)
-    all_tweets.extend(new_tweets)
-    oldest = all_tweets[-1].id - 1
-    while len(new_tweets) > 0:
-        print("getting tweets before {}".format(oldest))
-        new_tweets = api.user_timeline(screen_name=SCREEN_NAME, count=200, max_id=oldest, include_rts=False, exclude_replies=True)
-        all_tweets.extend(new_tweets)
-        oldest = all_tweets[-1].id - 1
-    print("Tweet Num {}".format(len(all_tweets)))
-    return [remove_emoji(x.text) for x in all_tweets]
-
-
-def get_trends_tokyo():
-    auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    api = tweepy.API(auth)
-    return [remove_emoji(x["name"]) for x in api.trends_place(1118285)[0]["trends"]]
 
 
 def get_links_by_url(url, exclude_list):
@@ -136,10 +106,6 @@ def get_text_by_base_url(base_url, exclude_list):
     return text_list
 
 
-def remove_emoji(src_str):
-    return "".join(c for c in src_str if c not in emoji.UNICODE_EMOJI)
-
-
 def word_count(texts, exclude_list):
     t = Tokenizer()
     words = []
@@ -184,10 +150,6 @@ def textMakarov(text):
     return ''.join(sentence.split())
 
 
-def remove_url(text):
-    return re.sub(r"(https?|ftp)(:\/\/[-_\.!~*\'()a-zA-Z0-9;\/?:\@&=\+$,%#]+)", "", text)
-
-
 def overdraw_image():
     im1 = Image.open("mask_photos/head-profile-of-young-male.png")
     im2 = Image.open(os.path.join(os.path.dirname(__file__), "word_cloud_tweet_face_profile_alpha.png")).convert("RGBA")
@@ -196,7 +158,8 @@ def overdraw_image():
 
 
 def main():
-    tweets = get_tweets()
+    tw = Tweet()
+    tweets = tw.get_tweets()
     exclude_list = generate_exclude_list()
     words = word_count(tweets, exclude_list)
     generate_word_cloud(words, "word_cloud_tweet.png")
@@ -208,8 +171,7 @@ def main():
     overdraw_image()
     print("makarov: ")
     print(textMakarov(wakati_text(tweets)))
-    print(get_trends_tokyo())
-    generate_word_cloud(get_trends_tokyo(), "trend_tokyo.png")
+    generate_word_cloud(tw.get_trends_tokyo(), "trend_tokyo.png")
     blog_words = word_count(get_text_by_base_url(BASE_URL, ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]), exclude_list)
     generate_word_cloud(blog_words, "word_cloud_blog.png", alpha=True, mask="rect")
 

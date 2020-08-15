@@ -56,7 +56,7 @@ class Tweet:
         followers_followers_list.append([follower.screen_name for follower in my_followers])
         for follower in my_followers:
             print(follower.screen_name)
-            if follower.friends_count > 300:
+            if follower.followers_count > 300:
                 print("many friends may be a spam: {}".format(follower.friends_count))
                 continue
             others_followers = self.get_followers(follower.screen_name)

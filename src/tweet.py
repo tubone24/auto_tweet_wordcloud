@@ -38,7 +38,13 @@ class Tweet:
         return [remove_emoji(x["name"]) for x in self.api.trends_place(1118285)[0]["trends"]]
 
     def get_followers(self, user):
-        return [follower.screen_name for follower in self.__limit_handled(tweepy.Cursor(self.api.followers, user).items())]
+        followers = []
+        try:
+            for follower in self.__limit_handled(tweepy.Cursor(self.api.followers, user).items())
+                followers.append(follower.screen_name)
+        except RuntimeError as e:  # RuntimeError: generator raised StopIteration
+            print(e)
+        return followers
 
     def get_followers_followers_list(self):
         followers_followers_list = []

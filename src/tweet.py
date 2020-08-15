@@ -34,7 +34,7 @@ class Tweet:
         #     all_tweets.extend(new_tweets)
         #     oldest = all_tweets[-1].id - 1
         # print("Tweet Num {}".format(len(all_tweets)))
-        for new_tweet in self.__limit_handled(tweepy.Cursor(self.api.user_timeline, screen_name=SCREEN_NAME, count=200, include_rts=False, exclude_replies=True).items()):
+        for new_tweet in self.__limit_handled(tweepy.Cursor(self.api.user_timeline, screen_name=SCREEN_NAME, include_rts=False, exclude_replies=True).items()):
             all_tweets.append(new_tweet)
         print("Tweet Num {}".format(len(all_tweets)))
         return [remove_emoji(x.text) for x in all_tweets]

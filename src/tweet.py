@@ -42,7 +42,7 @@ class Tweet:
         followers = []
         try:
             for follower in self.__limit_handled(tweepy.Cursor(self.api.friends, user).items()):
-                followers.append(follower.screen_name)
+                followers.append(follower)
         except RuntimeError as e:  # RuntimeError: generator raised StopIteration
             print(e)
         return followers
@@ -50,12 +50,12 @@ class Tweet:
     def get_followers_followers_list(self):
         followers_followers_list = []
         my_followers = self.get_friends(SCREEN_NAME)
-        followers_followers_list.append(my_followers)
+        followers_followers_list.append([follower.screen_name for follower in my_followers])
         for follower in my_followers:
             print(follower)
             if follower.friends_count > 300:
                 print("many friends may be a spam: {}".format(follower.friends_count))
                 continue
-            others_followers = self.get_friends(follower)
-            followers_followers_list.append(others_followers)
+            others_followers = self.get_friends(follower.screen_name)
+            followers_followers_list.append([follower.screen_name for follower in others_followers])
         return followers_followers_list

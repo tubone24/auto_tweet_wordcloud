@@ -129,24 +129,24 @@ jobs:
           asset_path: word_cloud_blog_large.png
           asset_name: word_cloud_blog_large.png
           asset_content_type: image/png
-      - name: Upload Release Asset Makarov word_cloud_tweet_alpha
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: word_cloud_tweet_alpha.png
-          asset_name: word_cloud_tweet_alpha.png
-          asset_content_type: image/png
-      - name: Upload Release Asset Makarov word_cloud_tweet_face_profile_alpha
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: word_cloud_tweet_face_profile_alpha.png
-          asset_name: word_cloud_tweet_face_profile_alpha.png
-          asset_content_type: image/png
+      # - name: Upload Release Asset Makarov word_cloud_tweet_alpha
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.github_token }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: word_cloud_tweet_alpha.png
+      #     asset_name: word_cloud_tweet_alpha.png
+      #     asset_content_type: image/png
+      # - name: Upload Release Asset Makarov word_cloud_tweet_face_profile_alpha
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.github_token }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: word_cloud_tweet_face_profile_alpha.png
+      #     asset_name: word_cloud_tweet_face_profile_alpha.png
+      #     asset_content_type: image/png
       - name: Upload Release Asset Makarov word_cloud_tweet_face_profile
         uses: actions/upload-release-asset@v1
         env:

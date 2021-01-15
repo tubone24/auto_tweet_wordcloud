@@ -33,6 +33,16 @@ class WC:
         text = " ".join(words)
         if mask == "rect":
             mask = None
+            wordcloud = WordCloud(background_color=None,
+                              colormap="viridis",
+                              font_path=FONT_PATH,
+                              mode="RGBA",
+                              width=320,
+                              height=160,
+                              mask=mask
+                              ).generate(text)
+            wordcloud.to_file(filename)
+            return None
         elif mask:
             mask = np.array(Image.open(mask))
         else:

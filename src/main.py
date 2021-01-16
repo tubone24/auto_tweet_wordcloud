@@ -4,6 +4,7 @@ from tweet import Tweet
 from web import Web
 from makarov import run_makarov
 from wc import WC
+from convert_webp import conv_webp
 
 FONT_PATH = "fonts/keifont.ttf"
 BASE_URL = "https://blog.tubone-project24.xyz"
@@ -30,6 +31,7 @@ def main():
     wordcloud_blog_words = WC(web.get_text_by_base_url(), exclude_list)
     wordcloud_blog_words.generate_word_cloud("word_cloud_blog.png", alpha=True, mask="rect")
     wordcloud_blog_words.generate_word_cloud("word_cloud_blog_large.png", alpha=True, mask="rect_large")
+    conv_webp("word_cloud_blog.png")
     # print(tw.get_followers_followers_list())
 
 

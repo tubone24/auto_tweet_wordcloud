@@ -36,7 +36,6 @@ class WC:
             wordcloud = WordCloud(background_color=None,
                               colormap="viridis",
                               font_path=FONT_PATH,
-                              mode="RGBA",
                               width=320,
                               height=160,
                               mask=mask

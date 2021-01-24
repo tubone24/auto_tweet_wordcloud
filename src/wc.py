@@ -33,7 +33,7 @@ class WC:
         text = " ".join(words)
         if mask == "rect":
             mask = None
-            wordcloud = WordCloud(background_color=None,
+            wordcloud = WordCloud(background_color='white',
                               colormap="viridis",
                               font_path=FONT_PATH,
                               width=320,
@@ -44,7 +44,7 @@ class WC:
             return None
         elif mask == "rect_large":
             mask = None
-            wordcloud = WordCloud(background_color=None,
+            wordcloud = WordCloud(background_color='white',
                               colormap="viridis",
                               font_path=FONT_PATH,
                               mode="RGBA",

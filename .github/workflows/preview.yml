@@ -1,0 +1,39 @@
+name: Generate Word Cloud
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  GenerateWordCloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.7"
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install Dependencies
+        run:
+          pip install -r requirements.txt
+      - name: Download Neologd Dictionary
+        run:
+          sh scripts/download_neologd_dict.sh
+      - name: Generate Word Cloud
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+        run: python3 src/main.py
+      - uses: actions/upload-artifact@v2
+        with:
+          name: wordcloud-image
+          path: *.png

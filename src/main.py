@@ -15,7 +15,7 @@ def main():
 #     tw = Tweet()
 #     tweets = tw.get_tweets()
 #     print("get tweet")
-#     exclude_list = generate_exclude_list()
+    exclude_list = generate_exclude_list()
 #     wordcloud_tweet = WC(tweets, exclude_list)
 #     wordcloud_tweet.generate_word_cloud("word_cloud_tweet.png")
 #     print("generate tweet cloud")

@@ -8,7 +8,7 @@ from convert_webp import conv_webp
 
 FONT_PATH = "fonts/keifont.ttf"
 BASE_URL = "https://blog.tubone-project24.xyz"
-WEB_EXCLUDE_LIST = ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#"]
+WEB_EXCLUDE_LIST = ["tag", "contact", "about", "sitemap", "pages", "rss", "photos", "privacy-policies", "header", "#", "mailto:"]
 
 
 def main():
@@ -31,8 +31,8 @@ def main():
 #     wordcloud_trend.generate_word_cloud("trend_tokyo.png")
     web = Web(BASE_URL, WEB_EXCLUDE_LIST)
     wordcloud_blog_words = WC(web.get_text_by_base_url(), exclude_list)
-    wordcloud_blog_words.generate_word_cloud("word_cloud_blog.png", alpha=False, mask="rect")
-    wordcloud_blog_words.generate_word_cloud("word_cloud_blog_large.png", alpha=True, mask="rect_large")
+    wordcloud_blog_words.generate_word_cloud("word-cloud-blog.png", alpha=False, mask="rect")
+    wordcloud_blog_words.generate_word_cloud("word-cloud-blog-large.png", alpha=True, mask="rect_large")
     conv_webp("word_cloud_blog.png")
     # print(tw.get_followers_followers_list())
 

@@ -34,24 +34,24 @@ class WC:
         if mask == "rect":
             mask = None
             wordcloud = WordCloud(background_color='white',
-                              colormap="viridis",
-                              font_path=FONT_PATH,
-                              width=320,
-                              height=160,
-                              mask=mask
-                              ).generate(text)
+                                  colormap="viridis",
+                                  font_path=FONT_PATH,
+                                  width=320,
+                                  height=160,
+                                  mask=mask
+                                  ).generate(text)
             wordcloud.to_file(filename)
             return None
         elif mask == "rect_large":
             mask = None
             wordcloud = WordCloud(background_color='white',
-                              colormap="viridis",
-                              font_path=FONT_PATH,
-                              mode="RGBA",
-                              width=800,
-                              height=400,
-                              mask=mask
-                              ).generate(text)
+                                  colormap="viridis",
+                                  font_path=FONT_PATH,
+                                  mode="RGBA",
+                                  width=800,
+                                  height=400,
+                                  mask=mask
+                                  ).generate(text)
             wordcloud.to_file(filename)
             return None
         elif mask:
@@ -63,18 +63,18 @@ class WC:
 
         if alpha:
             wordcloud = WordCloud(background_color=None,
-                              colormap="viridis",
-                              font_path=FONT_PATH,
-                              mode="RGBA",
-                              mask=mask
-                              ).generate(text)
+                                  colormap="viridis",
+                                  font_path=FONT_PATH,
+                                  mode="RGBA",
+                                  mask=mask
+                                  ).generate(text)
             wordcloud.to_file(filename)
         else:
             wordcloud = WordCloud(background_color="white",
-                              colormap="viridis",
-                              font_path=FONT_PATH,
-                              mask=mask
-                              ).generate(text)
+                                  colormap="viridis",
+                                  font_path=FONT_PATH,
+                                  mask=mask
+                                  ).generate(text)
             wordcloud.to_file(filename)
 
     @staticmethod

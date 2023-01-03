@@ -1,6 +1,7 @@
 name: Generate Word Cloud
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master

@@ -50,7 +50,7 @@ class Web:
     def __get_text_by_url(self, url):
         res = self.__requests_get(url)
         soup = BeautifulSoup(res.text, "html.parser")
-        content = soup.find("div", class_='content')
+        content = soup.find("div", attrs={"data-testid": "innerHTML"})
         if content:
             return content.get_text()
         else:

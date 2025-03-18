@@ -5,7 +5,7 @@ Pillow==9.0.1
 numpy==1.19.0
 Janome==0.3.10
 emoji==1.7
-tweepy==3.9.0
+tweepy==3.10.0
 beautifulsoup4==4.9.1
 reppy==0.4.14
 markovify==0.9.4

@@ -1,4 +1,4 @@
-wordcloud==1.7.0
+wordcloud==1.9.4
 requests==2.22.0
 requests-oauthlib==1.2.0
 Pillow==9.0.1

@@ -2,7 +2,7 @@ wordcloud==1.7.0
 requests==2.22.0
 requests-oauthlib==1.2.0
 Pillow==9.0.1
-numpy==1.19.0
+numpy==1.26.4
 Janome==0.3.10
 emoji==1.7
 tweepy==3.9.0
